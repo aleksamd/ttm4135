@@ -31,6 +31,10 @@ class LoginController extends Controller
         if ( Auth::checkCredentials($username, $password) ) {
             $user = User::findByUser($username);
             $_SESSION['userid'] = $user->getId();
+            $authCode = md5(uniqid(mt_rand(), true));
+            $exptime = mktime(). time()+60*60;
+            $_SESSION['authentication'] = $authCode;
+            setcookie('authentication', $authCode, $exptime, '/', '', true, true);
             $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
             $this->app->redirect('/');
         } else {
