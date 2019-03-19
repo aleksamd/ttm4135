@@ -18,7 +18,7 @@ class Auth
             return false;
         }
 
-        if( $user->getPassword() == $password)
+        if( $user->getPassword() == hash('sha256',$password))
         {
           return true;
         }
