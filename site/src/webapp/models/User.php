@@ -6,7 +6,7 @@ class User
 {
     const INSERT_QUERY = "INSERT INTO users(username, password, email, bio, isadmin) VALUES(:username, :password, :email , :bio , :isadmin)";
     const UPDATE_QUERY = "UPDATE users SET username= :username, password= :password, email= :email, bio= :bio, isadmin= :isadmin WHERE id= :id ";
-    const DELETE_QUERY = "DELETE FROM users WHERE id= :id ";
+    const DELETE_QUERY = "DELETE FROM users WHERE id = :id ";
     const FIND_BY_NAME_QUERY = "SELECT * FROM users WHERE username= :username";
     const FIND_BY_ID_QUERY = "SELECT * FROM users WHERE id= :id ";
 
@@ -73,6 +73,7 @@ class User
         $statement->bindValue(':id', $this->id);
 
         return $statement->execute();
+
     }
 
     function getId()
@@ -187,7 +188,9 @@ class User
 
         foreach ($results as $row) {
             $user = User::makeFromSql($row);
-            array_push($users, $user);
+            if (! $user == Null){
+                array_push($users, $user);
+            }
         }
 
         return $users;
@@ -195,6 +198,10 @@ class User
 
     static function makeFromSql($row)
     {
+        if ($row['username'] == Null and  $row['password'] == Null){
+            return Null;
+        }
+
         return User::make(
             $row['id'],
             $row['username'],
@@ -203,6 +210,8 @@ class User
             $row['bio'],
             $row['isadmin']
         );
+
+
     }
 
 }

@@ -39,6 +39,7 @@ class LoginController extends Controller
             $authCode = md5(uniqid(mt_rand(), true));
             $_SESSION['totsnotauth'] = $authCode;
 
+
             // Create authenticaiton cookie, and restrict to https pages
             // setcookie('PHPSESSID', $authCode, 0, '/', '', true, true);
 
