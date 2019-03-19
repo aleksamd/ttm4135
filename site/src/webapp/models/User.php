@@ -180,7 +180,8 @@ class User
     {
         $statement = self::$app->db->prepare("SELECT * FROM users");
         $statement->execute();
-        $results = $statement->fetch();
+        $results = $statement->fetchAll();
+
 
         $users = [];
 

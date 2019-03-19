@@ -9,3 +9,4 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [QSA,L]
 Header set Content-Security-Policy "default-src 'self'; script-src 'self'; child-src 'none';"
+Header always append X-Frame-Options SAMEORIGIN
