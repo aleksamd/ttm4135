@@ -29,12 +29,19 @@ class LoginController extends Controller
         $password = $request->post('password');
 
         if ( Auth::checkCredentials($username, $password) ) {
+            // Regenerate session id
+            session_regenerate_id(true);
+
             $user = User::findByUser($username);
             $_SESSION['userid'] = $user->getId();
+
+            // Generate random code for the authentication cookie and store it in the session
             $authCode = md5(uniqid(mt_rand(), true));
-            $exptime = mktime(). time()+60*60;
-            $_SESSION['authentication'] = $authCode;
-            setcookie('authentication', $authCode, $exptime, '/', '', true, true);
+            $_SESSION['totsnotauth'] = $authCode;
+
+            // Create authenticaiton cookie, and restrict to https pages
+            // setcookie('PHPSESSID', $authCode, 0, '/', '', true, true);
+
             $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
             $this->app->redirect('/');
         } else {
