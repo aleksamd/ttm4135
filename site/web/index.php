@@ -8,6 +8,7 @@ if (! extension_loaded('openssl')) {
 
 session_cache_limiter(false);
 session_start();
+session_regenerate_id(true);
 
 if (preg_match('/\.(?:png|jpg|jpeg|gif|txt|css|js)$/', $_SERVER["REQUEST_URI"]))
     return false; // serve the requested resource as-is.
