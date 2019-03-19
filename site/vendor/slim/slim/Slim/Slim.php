@@ -301,8 +301,8 @@ class Slim
             'cookies.lifetime' => '20 minutes',
             'cookies.path' => '/',
             'cookies.domain' => null,
-            'cookies.secure' => false,
-            'cookies.httponly' => false,
+            'cookies.secure' => true,
+            'cookies.httponly' => true,
             // Encryption
             'cookies.secret_key' => 'CHANGE_ME',
             'cookies.cipher' => MCRYPT_RIJNDAEL_256,

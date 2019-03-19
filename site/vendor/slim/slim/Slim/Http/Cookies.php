@@ -43,8 +43,8 @@ class Cookies extends \Slim\Helper\Set
         'domain' => null,
         'path' => null,
         'expires' => null,
-        'secure' => false,
-        'httponly' => false
+        'secure' => true,
+        'httponly' => true
     );
 
     /**
