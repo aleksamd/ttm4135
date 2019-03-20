@@ -30,7 +30,12 @@ class Auth
      */
     static function check()
     {
-        return isset($_SESSION['userid']);
+        // Checks for authentication cookie and if its correct
+        $hasValidAuth = (!empty($_COOKIE['authentication']))
+            && (isset($_SESSION['authentication']))
+            && (isset($_SESSION['userid']))
+            && ($_COOKIE['authentication'] === $_SESSION['authentication']);
+        return $hasValidAuth;
     }
 
     /**
