@@ -11,7 +11,7 @@
 <form action="" method="POST">
 
 <label>Username: </label>
-<input type="text" name="username"> <br />
+<input type="text" name="username" value="{{ inputUsername|default("") }}"> <br />
 <label>Password: </label>
 <input type="password"  autocomplete="off"  name="password"> <br />
 <input type="submit" name="submit"  value="Log in">

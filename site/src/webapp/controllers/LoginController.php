@@ -18,7 +18,12 @@ class LoginController extends Controller
             $this->app->flash('info', 'You are already logged in as ' . $username);
             $this->app->redirect('/');
         } else {
-            $this->render('login.twig', ['title'=>"Login"]);
+            $hasLog = !empty($_COOKIE['easylog']);
+            $cookieName = "";
+            if($hasLog){
+                $cookieName = $_COOKIE['easylog'];
+            }
+            $this->render('login.twig', ['title'=>"Login", 'inputUsername'=>$cookieName]);
         }
     }
 
@@ -37,11 +42,14 @@ class LoginController extends Controller
 
             // Generate random code for the authentication cookie and store it in the session
             $authCode = md5(uniqid(mt_rand(), true));
-            $_SESSION['totsnotauth'] = $authCode;
+            $_SESSION['authentication'] = $authCode;
 
 
-            // Create authenticaiton cookie, and restrict to https pages
-            // setcookie('PHPSESSID', $authCode, 0, '/', '', true, true);
+            // Create cookie that stores username, and restrict to https pages
+            setcookie('easylog', $username, 0, '/', '', true, true);
+
+            // Create authentication cookie, and restrict to https pages
+            setcookie('authentication', $authCode, 0, '/', '', true, true);
 
             $this->app->flash('info', "You are now successfully logged in as " . $user->getUsername() . ".");
             $this->app->redirect('/');
